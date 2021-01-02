@@ -1,4 +1,5 @@
 #include "lvgl.h"
+#include <rtthread.h>
 
 long lv_tell(lv_fs_file_t *fd)
 {

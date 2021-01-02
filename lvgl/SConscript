@@ -1,0 +1,27 @@
+import os
+from building import *
+import rtconfig
+
+cwd = GetCurrentDir()
+
+src = []
+
+src += Glob('./src/lv_core/*.c')
+src += Glob('./src/lv_draw/*.c')
+src += Glob('./src/lv_font/*.c')
+src += Glob('./src/lv_gpu/*.c')
+src += Glob('./src/lv_hal/*.c')
+src += Glob('./src/lv_misc/*.c')
+src += Glob('./src/lv_themes/*.c')
+src += Glob('./src/lv_widgets/*.c')
+
+CCFLAGS = ''
+
+if rtconfig.CROSS_TOOL == 'gcc':
+    CCFLAGS += ' -std=c99 -w'
+elif rtconfig.CROSS_TOOL == 'keil':
+    CCFLAGS += ' --c99 --gnu -g -W'
+
+group = DefineGroup('lvgl', src, depend = ['PKG_USING_LVGL_RTT'], CCFLAGS = CCFLAGS)
+
+Return('group')

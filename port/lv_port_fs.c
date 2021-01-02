@@ -2,9 +2,9 @@
  * @file lv_port_fs_templ.c
  *
  */
-
+#include "lv_conf.h"
  /*Copy this file as "lv_port_fs.c" and set this value to "1" to enable content*/
-#if 1
+#if LV_USE_FILESYSTEM
 
 /*********************
  *      INCLUDES
@@ -201,51 +201,6 @@ static lv_fs_res_t fs_tell (lv_fs_drv_t * drv, void * file_p, uint32_t * pos_p)
 
     return res;
 }
-
-///**
-// * Initialize a 'fs_read_dir_t' variable for directory reading
-// * @param rddir_p pointer to a 'fs_read_dir_t' variable
-// * @param path path to a directory
-// * @return LV_FS_RES_OK or any error from lv_fs_res_t enum
-// */
-//static lv_fs_res_t fs_dir_open (lv_fs_drv_t * drv, void * rddir_p, const char *path)
-//{
-//    lv_fs_res_t res = LV_FS_RES_NOT_IMP;
-//
-//    /* Add your code here*/
-//
-//    return res;
-//}
-//
-///**
-// * Read the next filename form a directory.
-// * The name of the directories will begin with '/'
-// * @param rddir_p pointer to an initialized 'fs_read_dir_t' variable
-// * @param fn pointer to a buffer to store the filename
-// * @return LV_FS_RES_OK or any error from lv_fs_res_t enum
-// */
-//static lv_fs_res_t fs_dir_read (lv_fs_drv_t * drv, void * rddir_p, char *fn)
-//{
-//    lv_fs_res_t res = LV_FS_RES_NOT_IMP;
-//
-//    /* Add your code here*/
-//
-//    return res;
-//}
-//
-///**
-// * Close the directory reading
-// * @param rddir_p pointer to an initialized 'fs_read_dir_t' variable
-// * @return LV_FS_RES_OK or any error from lv_fs_res_t enum
-// */
-//static lv_fs_res_t fs_dir_close (lv_fs_drv_t * drv, void * rddir_p)
-//{
-//    lv_fs_res_t res = LV_FS_RES_NOT_IMP;
-//
-//    /* Add your code here*/
-//
-//    return res;
-//}
 
 #else /* Enable this file at the top */
 
