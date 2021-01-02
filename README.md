@@ -50,55 +50,33 @@ lvgl package for RT-Thread
 
 
 
+## ART-PI 使用该软件包
 
+首先在软件包中选中 BSP 中提供的 LCD 驱动，在
 
-```C
-rt_size_t touch_gt1151_readpoint(struct rt_touch_device *touch, void *data_buf, rt_size_t touch_num)
-{
-    RT_ASSERT(touch_num == 1);  // only support 1 touch point
-
-    struct gt1151_object *object = (struct gt1151_object *)touch->config.user_data;
-
-    uint8_t status;
-    uint8_t buf[8];
-    uint16_t x = 0, y = 0;
-
-    struct rt_touch_data *pdata = (struct rt_touch_data *)data_buf;
-
-    gt1151_read_regs(object, GT1151_STATUS, &status, 1);
-
-    if (status < 0x80)  // no data get
-        return 0;
-
-    else if (status == 0x80) { // no data get
-        LOG_D("status: %x", status);
-        gt1151_clear_status(object);
-        return 0;
-    }
-    else {
-        gt1151_clear_status(object);
-
-        LOG_D("status: %x", status);
-
-        gt1151_read_regs(object, GT1151_STATUS, buf, 8);
-
-        x = ((uint16_t)buf[3] << 8) + buf[2];
-        y = ((uint16_t)buf[5] << 8) + buf[4];
-
-        if (x > GT1151_TOUCH_WIDTH - 1)  x = GT1151_TOUCH_WIDTH;
-        if (y > GT1151_TOUCH_HEIGHT - 1) y = GT1151_TOUCH_HEIGHT;
-
-        pdata->x_coordinate = x;
-        pdata->y_coordinate = y;
-        pdata->track_id = 1;
-        pdata->event = RT_TOUCH_EVENT_DOWN;
-        pdata->timestamp = rt_touch_get_ts();
-
-        status = 0;
-
-        LOG_D("\t x: %d, y: %d", x, y);
-    }
-    return 1;
-}
+```
+Hardware Drivers Config -->
+	On-chip Peripheral -->
+		[*]Enable LCD
 ```
 
+
+
+修改 lcd_port.h 里的显示驱动参数来适配屏幕（以正点原子4384显示屏为例），参数修改为如下：
+
+```C
+#define LCD_WIDTH           800
+#define LCD_HEIGHT          480
+#define LCD_BITS_PER_PIXEL  16//24
+#define LCD_BUF_SIZE        (LCD_WIDTH * LCD_HEIGHT * LCD_BITS_PER_PIXEL / 8)
+#define LCD_PIXEL_FORMAT    RTGRAPHIC_PIXEL_FORMAT_RGB565//888
+
+#define LCD_HSYNC_WIDTH     1
+#define LCD_VSYNC_HEIGHT    1
+#define LCD_HBP             40//88
+#define LCD_VBP             32
+#define LCD_HFP             48//40
+#define LCD_VFP             13
+```
+
+在软件包管理器中选中 lvgl ，并进行相应配置。（详细描述）

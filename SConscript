@@ -12,10 +12,10 @@ inc += [cwd]
 inc += [cwd + '/inc']
 
 # define LVGL_RTT group
-objs = DefineGroup('lvgl_rtt', src, depend = ['PKG_USING_LVGL_RTT'], CPPPATH = inc)
+objs = DefineGroup('lvgl_rtt', src, depend = ['PKG_USING_LVGL'], CPPPATH = inc)
 
 list = os.listdir(cwd)
-if GetDepend('PKG_USING_LVGL_RTT'):
+if GetDepend('PKG_USING_LVGL'):
     for d in list:
         path = os.path.join(cwd, d)
         if os.path.isfile(os.path.join(path, 'SConscript')):

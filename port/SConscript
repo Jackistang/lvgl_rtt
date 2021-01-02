@@ -3,6 +3,6 @@ from building import *
 cwd = GetCurrentDir()
 src = Glob('*.c')
 
-group = DefineGroup('lvgl_rtt_port', src, depend = ['PKG_USING_LVGL_RTT'])
+group = DefineGroup('lvgl_rtt_port', src, depend = ['PKG_USING_LVGL'])
 
 Return('group')

@@ -22,6 +22,6 @@ if rtconfig.CROSS_TOOL == 'gcc':
 elif rtconfig.CROSS_TOOL == 'keil':
     CCFLAGS += ' --c99 --gnu -g -W'
 
-group = DefineGroup('lvgl', src, depend = ['PKG_USING_LVGL_RTT'], CCFLAGS = CCFLAGS)
+group = DefineGroup('lvgl', src, depend = ['PKG_USING_LVGL'], CCFLAGS = CCFLAGS)
 
 Return('group')
